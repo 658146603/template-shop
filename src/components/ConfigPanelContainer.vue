@@ -48,6 +48,10 @@ const children_slot = {
 </script>
 
 <template>
+    <control-list-item title="组件标识">
+        <p>{{selected_item.id}}</p>
+    </control-list-item>
+
     <control-list-item title="容器类型">
         <el-radio-group v-model="selected_item.type" size="small">
             <el-radio-button label="CONTAINER">容器</el-radio-button>

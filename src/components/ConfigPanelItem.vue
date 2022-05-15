@@ -81,6 +81,10 @@ get_all_images()
 </script>
 
 <template>
+    <control-list-item title="组件标识">
+        <p>{{selected_item.id}}</p>
+    </control-list-item>
+
     <control-list-item title="字段类型" v-if="config_items.TYPE.includes(selected_item.type)">
         <el-popover :width="350" trigger="click">
             <template #reference>

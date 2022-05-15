@@ -96,7 +96,7 @@ const unknown: TemplateWidget = {
 
 export const button: TemplateWidget<{ action: string, arguments: { content: string }[] }> = {
     name: "BUTTON",
-    preview: (<button class='template-item template-default-button'>普通按钮</button>),
+    preview: (<button class='template-default-button'>普通按钮</button>),
     template() {
         return {
             id: random_id(),
@@ -118,7 +118,7 @@ export const button: TemplateWidget<{ action: string, arguments: { content: stri
         if (content.universal_prop.arguments == undefined) {
             content.universal_prop.arguments = []
         }
-        let classList: string[] = create_class_list(['template-item', 'template-default-button'], prop.clazz)
+        let classList: string[] = create_class_list(['template-default-button'], prop.clazz)
         return (<button class={classList}>{prop.content}</button>)
     },
     release_view(content) {
@@ -126,13 +126,14 @@ export const button: TemplateWidget<{ action: string, arguments: { content: stri
         if (prop.content == undefined) {
             prop.content = '普通按钮'
         }
-        let classList: string[] = create_class_list(['template-item', 'template-default-button'], prop.clazz)
+        let classList: string[] = create_class_list(['template-default-button'], prop.clazz)
         const action = content.universal_prop.action
         if (action == undefined || action == '' || action == 'submit') {
-            return (<button type="submit" class={classList}>{prop.content}</button>)
+            return (<button id={content.id} type="submit" class={classList}>{prop.content}</button>)
+        } else {
+            const args = content.universal_prop.arguments
+            return (<button id={content.id} type="button" class={classList} onClick={() => button_action(action, args)}>{prop.content}</button>)
         }
-        const args = content.universal_prop.arguments
-        return (<button type="button" class={classList} onClick={() => button_action(action, args)}>{prop.content}</button>)
     },
     universal_prop() {
         return {
@@ -170,7 +171,7 @@ export const button: TemplateWidget<{ action: string, arguments: { content: stri
 
 export const text_single: TemplateWidget = {
     name: "TEXT_SINGLE",
-    preview: (<p class='template-item template-default-text-single mdui-text-center'>单行文本</p>),
+    preview: (<p class='template-default-text-single mdui-text-center'>单行文本</p>),
     template() {
         return {
             id: random_id(),
@@ -186,7 +187,7 @@ export const text_single: TemplateWidget = {
         if (prop.content == undefined) {
             prop.content = '单行文本'
         }
-        let classList: string[] = create_class_list(['template-item', 'template-default-text-single'], prop.clazz)
+        let classList: string[] = create_class_list(['template-default-text-single'], prop.clazz)
         return (<p class={classList} style={prop.styles}>{prop.content}</p>)
     },
     release_view(content) {
@@ -194,8 +195,8 @@ export const text_single: TemplateWidget = {
         if (prop.content == undefined) {
             prop.content = '单行文本'
         }
-        let classList: string[] = create_class_list(['template-item', 'template-default-text-single'], prop.clazz)
-        return (<p class={classList} style={prop.styles}>{prop.content}</p>)
+        let classList: string[] = create_class_list(['template-default-text-single'], prop.clazz)
+        return (<p id={content.id} class={classList} style={prop.styles}>{prop.content}</p>)
     },
     configuration() {
         return (
@@ -209,7 +210,7 @@ export const text_single: TemplateWidget = {
 
 export const text_multi: TemplateWidget = {
     name: "TEXT_MULTI",
-    preview: (<p class='template-item template-default-text-multi mdui-text-center'>多行文本<br />多行文本</p>),
+    preview: (<p class='template-default-text-multi mdui-text-center'>多行文本<br />多行文本</p>),
     template() {
         return {
             id: random_id(),
@@ -225,7 +226,7 @@ export const text_multi: TemplateWidget = {
         if (prop.content == undefined) {
             prop.content = '多行文本'
         }
-        let classList: string[] = create_class_list(['template-item', 'template-default-text-multi'], prop.clazz)
+        let classList: string[] = create_class_list(['template-default-text-multi'], prop.clazz)
         return (<p class={classList} style={prop.styles}>{prop.content}</p>)
     },
     release_view(content) {
@@ -233,8 +234,8 @@ export const text_multi: TemplateWidget = {
         if (prop.content == undefined) {
             prop.content = '多行文本'
         }
-        let classList: string[] = create_class_list(['template-item', 'template-default-text-multi'], prop.clazz)
-        return (<p class={classList} style={prop.styles}>{prop.content}</p>)
+        let classList: string[] = create_class_list(['template-default-text-multi'], prop.clazz)
+        return (<p id={content.id} class={classList} style={prop.styles}>{prop.content}</p>)
     },
     configuration(_) {
         return (
@@ -249,7 +250,7 @@ export const text_multi: TemplateWidget = {
 
 export const input: TemplateWidget = {
     name: "INPUT",
-    preview: (<input class='template-item template-default-input' placeholder='默认文本框' type='text' disabled />),
+    preview: (<input class='template-default-input' placeholder='默认文本框' type='text' disabled />),
     template() {
         return {
             id: random_id(),
@@ -274,7 +275,7 @@ export const input: TemplateWidget = {
             prop.name = ''
         }
 
-        let classList: string[] = create_class_list(['template-item', 'template-default-input'], prop.clazz)
+        let classList: string[] = create_class_list(['template-default-input'], prop.clazz)
 
         return (<input type={prop.type} class={classList} name={prop.name} placeholder={prop.content} disabled />)
     },
@@ -289,9 +290,9 @@ export const input: TemplateWidget = {
         }
 
 
-        let classList: string[] = create_class_list(['template-item', 'template-default-input'], prop.clazz)
+        let classList: string[] = create_class_list(['template-default-input'], prop.clazz)
 
-        return (<input type={prop.type} class={classList} name={prop.name} placeholder={prop.content} />)
+        return (<input id={content.id} type={prop.type} class={classList} name={prop.name} placeholder={prop.content} />)
     },
     universal_prop() {
         return {}
@@ -305,7 +306,7 @@ export const image: TemplateWidget = {
     name: "IMAGE",
     preview: (
         <div>
-            <img class='template-item' src='/thumbnail.png' alt='图片' />
+            <img src='/thumbnail.png' alt='图片' />
             <div class='template-image-title'>图片标题</div>
         </div>
     ),
@@ -321,7 +322,7 @@ export const image: TemplateWidget = {
     },
     editor_view(content) {
         let prop = content.node_prop
-        let classList: string[] = create_class_list(['template-item'], prop.clazz)
+        let classList: string[] = create_class_list([], prop.clazz)
         if (prop.url === undefined || prop.url.length === 0) {
             prop.url = '/thumbnail.png'
         }
@@ -342,20 +343,20 @@ export const image: TemplateWidget = {
     },
     release_view(content) {
         let prop = content.node_prop
-        let classList: string[] = create_class_list(['template-item'], prop.clazz)
+        let classList: string[] = create_class_list([], prop.clazz)
         if (prop.url == undefined || prop.url.length == 0) {
             prop.url = '/thumbnail.png'
         }
         if (prop.content === undefined || prop.content.length === 0) {
             return (
                 <div>
-                    <img class={classList} src={prop.url} alt='图片' />
+                    <img id={content.id} class={classList} src={prop.url} alt='图片' />
                 </div>
             )
         } else {
             return (
                 <div>
-                    <img class={classList} src={prop.url} alt='图片' />
+                    <img id={content.id} class={classList} src={prop.url} alt='图片' />
                     <div class={['template-image-title', ...classList]}>{prop.content}</div>
                 </div>
             )
@@ -374,7 +375,7 @@ export const image: TemplateWidget = {
 export const divider: TemplateWidget = {
     name: "DIVIDER",
     preview: (
-        <div class='template-item template-divider'>分割线</div>
+        <div class='template-divider'>分割线</div>
     ),
     template() {
         return {
@@ -388,19 +389,19 @@ export const divider: TemplateWidget = {
     },
     editor_view(content) {
         let prop = content.node_prop
-        let classList: string[] = create_class_list(['template-item'], prop.clazz)
+        let classList: string[] = create_class_list([], prop.clazz)
         return (
             <div class={classList}>
-                <div class='template-item template-divider'>{prop.content}</div>
+                <div class='template-divider'>{prop.content}</div>
             </div>
         )
     },
     release_view(content) {
         let prop = content.node_prop
-        let classList: string[] = create_class_list(['template-item'], prop.clazz)
+        let classList: string[] = create_class_list([], prop.clazz)
         return (
-            <div class={classList}>
-                <div class='template-item template-divider'>{prop.content}</div>
+            <div id={content.id} class={classList}>
+                <div class='template-divider'>{prop.content}</div>
             </div>
         )
     },
@@ -415,7 +416,7 @@ export const divider: TemplateWidget = {
 export const container: TemplateWidget = {
     name: "CONTAINER",
     preview: (
-        <div class="template-item template-container mdui-container-fluid">
+        <div class="template-container mdui-container-fluid">
             <div class='template-slot mdui-col-xs-6'>
                 <p class='template-default-text-single mdui-text-center'>容器插槽</p>
             </div>
@@ -436,7 +437,7 @@ export const container: TemplateWidget = {
     },
     editor_view() {
         return (
-            <div class="template-item template-container mdui-container-fluid">
+            <div class="template-container mdui-container-fluid">
                 <div class='template-slot mdui-col-xs-6'>
                     <p class='template-default-text-single mdui-text-center'>容器插槽</p>
                 </div>
@@ -481,7 +482,7 @@ export const container: TemplateWidget = {
 export const form: TemplateWidget = {
     name: "FORM",
     preview: (
-        <div class="template-item template-container mdui-container-fluid">
+        <div class="template-container mdui-container-fluid">
             <div class='template-slot mdui-col-xs-12'>
                 <p class='template-default-text-single mdui-text-center'>表单组件</p>
             </div>
@@ -499,7 +500,7 @@ export const form: TemplateWidget = {
     },
     editor_view() {
         return (
-            <div class="template-item template-container mdui-container-fluid">
+            <div class="template-container mdui-container-fluid">
                 <div class='template-slot mdui-col-xs-6'>
                     <p class='template-default-text-single mdui-text-center'>容器插槽</p>
                 </div>
@@ -509,7 +510,7 @@ export const form: TemplateWidget = {
             </div>
         )
     },
-    release_view(content: Widget) {
+    release_view(content) {
         let form_prop: FormProp = content.form_prop
 
         let children: SlotProp[] = content.children
@@ -576,7 +577,7 @@ export const radio_group: TemplateWidget<{ options: { label: string, value: stri
     },
     name: "RADIO_GROUP",
     preview: (
-        <div class='template-item'>
+        <div>
             <div class="template-default-text-single">
                 单选框
             </div>
@@ -614,7 +615,7 @@ export const radio_group: TemplateWidget<{ options: { label: string, value: stri
         }
     },
     editor_view(content) {
-        const classList = create_class_list(['template-item'], content.node_prop.clazz)
+        const classList = create_class_list([], content.node_prop.clazz)
         return (
             <div class={classList}>
                 <div class="template-default-text-single">
@@ -635,9 +636,9 @@ export const radio_group: TemplateWidget<{ options: { label: string, value: stri
         )
     },
     release_view(content): JSX.Element {
-        const classList = create_class_list(['template-item'], content.node_prop.clazz)
+        const classList = create_class_list([], content.node_prop.clazz)
         return (
-            <div class={classList}>
+            <div id={content.id} class={classList}>
                 <div class="template-default-text-single">
                     {content.node_prop.content}
                 </div>
@@ -687,7 +688,7 @@ export const checkbox_group: TemplateWidget<{ options: { label: string, value: s
     },
     name: "CHECKBOX_GROUP",
     preview: (
-        <div class='template-item'>
+        <div>
             <div class="template-default-text-single">
                 多选框
             </div>
@@ -725,7 +726,7 @@ export const checkbox_group: TemplateWidget<{ options: { label: string, value: s
         }
     },
     editor_view(content) {
-        const classList = create_class_list(['template-item'], content.node_prop.clazz)
+        const classList = create_class_list([], content.node_prop.clazz)
         return (
             <div class={classList}>
                 <div class="template-default-text-single">
@@ -746,9 +747,9 @@ export const checkbox_group: TemplateWidget<{ options: { label: string, value: s
         )
     },
     release_view(content) {
-        const classList = create_class_list(['template-item'], content.node_prop.clazz)
+        const classList = create_class_list([], content.node_prop.clazz)
         return (
-            <div class={classList}>
+            <div id={content.id} class={classList}>
                 <div class="template-default-text-single">
                     {content.node_prop.content}
                 </div>

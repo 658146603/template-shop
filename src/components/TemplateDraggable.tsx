@@ -25,7 +25,7 @@ export const TemplateDraggable = defineComponent({
                         <div class={`template-container mdui-container-fluid ${selected_class}`} onClick={(e) => { props.select_item(element); e.stopPropagation() }}>
                             {element.children.map((slot_prop: SlotProp, index: number) => {
                                 return (
-                                    <div id={`${element.id}-${index}`}>
+                                    <div>
                                         <TemplateDraggable class={`template-slot mdui-col-xs-${slot_prop.size}`} data={slot_prop.children} select_item={props.select_item} selected_item={props.selected_item} enable_drag={props.enable_drag} />
                                     </div>
                                 )
@@ -34,7 +34,7 @@ export const TemplateDraggable = defineComponent({
                     )
                 } else {
                     return (
-                        <div class={`template-item ${selected_class}`} id={element.id} onClick={(e) => { props.select_item(element); e.stopPropagation() }}>
+                        <div class={`template-item ${selected_class}`} onClick={(e) => { props.select_item(element); e.stopPropagation() }}>
                             {template_render_function(element).editor_view(element)}
                         </div>
                     )
