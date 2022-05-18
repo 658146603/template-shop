@@ -3,7 +3,7 @@ import Toolbar from "./Toolbar.vue"
 import TemplateCardItem from "./TemplateCardItem.vue";
 import PageBody from "./PageBody.vue";
 
-import { request } from "../Request";
+import { request, api } from "../Request";
 import { eval_template, Template } from "../Model";
 import { ref } from "vue"
 import mdui from "mdui";
@@ -63,7 +63,7 @@ get_template_list()
   <page-body>
     <div class="mdui-container">
       <template-card-item v-for="template in templates" :tid="template.tid" :title="template.title"
-        :update-time="template.updateTime" thumbnail="/thumbnail.png" />
+        :update-time="template.updateTime" :thumbnail="api(`thumbnail/${template.tid}`)" />
     </div>
   </page-body>
 </template>

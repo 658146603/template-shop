@@ -12,10 +12,11 @@ import { ElPopover } from "element-plus";
 import { ref, computed, onMounted } from "vue";
 import { config_items } from "../Widget";
 import { Widget } from "../Widget";
-import { request } from "../Request";
+import { request, request_urlencoded } from "../Request";
 import { eval_template } from "../Model";
 import QrCodeImage from "./QrCodeImage";
 import mdui from "mdui";
+import html2canvas from "html2canvas";
 
 export default {
   name: "EditorPage",
@@ -37,12 +38,12 @@ export default {
 
 <script setup lang="ts">
 onMounted(() => {
-    // is mobile
-    if (window.innerWidth < 768) {
-        const params = new URLSearchParams(location.search)
-        const _tid = params.get('tid')
-        window.location.href = `/editor/mobile?tid=${_tid}`;
-    }
+  // is mobile
+  if (window.innerWidth < 768) {
+    const params = new URLSearchParams(location.search)
+    const _tid = params.get('tid')
+    window.location.href = `/editor/mobile?tid=${_tid}`;
+  }
 });
 
 const content_editor = ref<Widget[]>([])
@@ -118,6 +119,23 @@ function save_template() {
       }
     }
   )
+  upload_thumbnail()
+}
+
+function upload_thumbnail() {
+  const page_content = document.getElementById('template-container-root')
+  if (page_content != null) {
+    html2canvas(page_content, { useCORS: true }).then(canvas => canvas.toBlob(blob => {
+      if (blob != null) {
+        const formData = new FormData()
+        formData.append('file', blob)
+        formData.append('tid', page_tid.value)
+        request_urlencoded("thumbnail/upload", formData, (status, obj) => {
+          console.log(status, obj)
+        })
+      }
+    }))
+  }
 }
 
 function preview_template() {
@@ -151,7 +169,7 @@ const footerOn = ref(false)
     <div v-if="page_update_time !== undefined" class="mdui-typo-caption">
       最后更新 {{ page_update_time.toLocaleString() }}
     </div>
-    <el-switch class="mdui-hidden-xs" v-model="content_draggable" active-text="拖拽" inactive-text="滑动"/>
+    <el-switch class="mdui-hidden-xs" v-model="content_draggable" active-text="拖拽" inactive-text="滑动" />
     <el-popover trigger="hover" width="128">
       <template #reference>
         <a class="mdui-btn mdui-btn-icon mdui-hidden-xs">
@@ -191,9 +209,9 @@ const footerOn = ref(false)
           <label class="mdui-textfield-label">页面标题</label>
           <input class="mdui-textfield-input" type="text" v-model="page_title" />
         </div>
-        <template-draggable @click="select_item(undefined)" id="template-container-root" :enable_drag="content_draggable"
-          class="template-container-root mdui-center" :data="content_editor" :selected_item="selected_item"
-          :select_item="select_item" />
+        <template-draggable @click="select_item(undefined)" id="template-container-root"
+          :enable_drag="content_draggable" class="template-container-root mdui-center" :data="content_editor"
+          :selected_item="selected_item" :select_item="select_item" />
       </div>
 
       <div class="template-editor-area template-editor-area-prop">

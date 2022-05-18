@@ -12,10 +12,11 @@ import { ElPopover } from "element-plus";
 import { ref, computed, onMounted } from "vue";
 import { config_items } from "../Widget";
 import { Widget } from "../Widget";
-import { request } from "../Request";
+import { request, request_urlencoded } from "../Request";
 import { eval_template } from "../Model";
 import { TemplateWidget } from "./Template";
 import mdui from "mdui";
+import html2canvas from "html2canvas";
 
 export default {
     name: "EditorPageMobile",
@@ -127,6 +128,23 @@ function save_template() {
             }
         }
     )
+  upload_thumbnail()
+}
+
+function upload_thumbnail() {
+  const page_content = document.getElementById('template-container-root')
+  if (page_content != null) {
+    html2canvas(page_content, { useCORS: true }).then(canvas => canvas.toBlob(blob => {
+      if (blob != null) {
+        const formData = new FormData()
+        formData.append('file', blob)
+        formData.append('tid', page_tid.value)
+        request_urlencoded("thumbnail/upload", formData, (status, obj) => {
+          console.log(status, obj)
+        })
+      }
+    }))
+  }
 }
 
 function preview_template() {

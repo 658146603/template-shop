@@ -1,7 +1,7 @@
 <script lang="ts">
 import mdui from 'mdui';
 import { TemplateOrder } from '../Model';
-import { request } from '../Request';
+import { request, api } from '../Request';
 
 export default {
   name: "TemplateOrderItem"
@@ -39,7 +39,7 @@ function create_from_template() {
   <div class="mdui-col-xs-12 mdui-col-sm-6 mdui-col-md-4" style="margin: 16px 0;">
     <div class="mdui-card">
       <div class="mdui-card-media">
-        <img src="/thumbnail.png" :alt="template_order.template.title" />
+        <img :src="api(`thumbnail/${template_order.template.tid}`)" class="image-preview-cover" :alt="template_order.template.title" />
         <div class="mdui-card-primary mdui-card-media-covered">
           <div class="mdui-card-primary-title template-card-title">{{ template_order.template.title }}</div>
           <div class="mdui-card-primary-subtitle">{{ template_order.orderTime.toLocaleString() }}</div>

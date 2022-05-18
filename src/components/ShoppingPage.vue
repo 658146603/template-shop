@@ -2,7 +2,7 @@
 import Toolbar from "./Toolbar.vue"
 import PageBody from "./PageBody.vue";
 import TemplateSellItem from "./TemplateSellItem.vue";
-import { request } from "../Request";
+import { request, api } from "../Request";
 import { eval_template_share, TemplateShare } from "../Model";
 import { ref } from "vue";
 
@@ -38,7 +38,7 @@ get_shared_template_list()
   <page-body>
     <div class="mdui-container">
       <template-sell-item v-for="template in templates" :tid="template.tid" :title="template.title"
-        :price="template.price" :share-time="template.shareTime" thumbnail="/thumbnail.png" />
+        :price="template.price" :share-time="template.shareTime" :thumbnail="api(`thumbnail/${template.tid}`)" />
     </div>
   </page-body>
 </template>

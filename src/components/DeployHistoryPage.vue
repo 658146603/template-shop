@@ -33,9 +33,13 @@ const DeployHistoryCard = defineComponent({
             return (
                 <div class="mdui-col-xs-12 mdui-col-sm-6 mdui-col-md-4" style="margin: 16px 0;">
                     <div class="mdui-card">
-                        <div class="mdui-card-primary">
-                            <div class="mdui-card-primary-title">{deploy_history.deployTemplate?.title || ''}</div>
-                            <div class="mdui-card-primary-subtitle">{deploy_history.deployTime.toLocaleString()}</div>
+                        <div class="mdui-card-media">
+                            <img src={api(`thumbnail/${deploy_history.deployTemplate?.tid}`)} class="image-preview-cover" />
+                            <div class="mdui-card-primary mdui-card-media-covered">
+
+                                <div class="mdui-card-primary-title">{deploy_history.deployTemplate?.title || ''}</div>
+                                <div class="mdui-card-primary-subtitle">{deploy_history.deployTime.toLocaleString()}</div>
+                            </div>
                         </div>
                         <div class="mdui-card-actions">
                             <ElPopover v-slots={{

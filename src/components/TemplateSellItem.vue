@@ -2,7 +2,7 @@
   <div class="mdui-col-xs-12 mdui-col-sm-6 mdui-col-md-4" style="margin: 16px 0;">
     <div class="mdui-card">
       <div class="mdui-card-media">
-        <img :src="thumbnail" :alt="title" />
+        <img :src="thumbnail" :alt="title" class="image-preview-cover" />
         <div class="mdui-card-primary mdui-card-media-covered">
           <div class="mdui-card-primary-title template-card-title">{{ title }}</div>
           <div class="mdui-card-primary-subtitle">{{ shareTime.toLocaleString() }}</div>
