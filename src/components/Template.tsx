@@ -608,7 +608,7 @@ export const radio_group: TemplateWidget<{ options: { label: string, value: stri
         return {
             id: random_id(),
             type: this.name,
-            node_prop: { name: "radio-group-demo", content: "多选框" },
+            node_prop: { name: "radio-group-demo", content: "单选框" },
             children: [],
             form_prop: {},
             universal_prop: this.universal_prop()

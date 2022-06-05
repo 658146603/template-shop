@@ -121,7 +121,6 @@ export const class_group: {
 
 export const input_type_group: { type: string, desc: string }[] = [
     { type: 'text', desc: '文本' },
-    { type: 'password', desc: '密码' },
     { type: 'number', desc: '数字' },
     { type: 'email', desc: '邮箱' },
     { type: 'tel', desc: '电话' },
